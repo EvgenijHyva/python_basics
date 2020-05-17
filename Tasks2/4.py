@@ -16,7 +16,7 @@ for i in range(1, len(split_string) + 1):
     # my_dict[i] = split_string[i-1]
     # print(my_dict)
     if len(split_string[i - 1]) >= 10:
-    # формируем словарь для укороченых значений
+        # формируем словарь для укороченых значений
         my_dict[i] = split_string[i - 1][:10]
     else:
         my_dict[i] = split_string[i - 1]
