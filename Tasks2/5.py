@@ -8,7 +8,7 @@
 # Набор натуральных чисел можно задать непосредственно в коде, например, my_list = [7, 5, 3, 3, 2].
 
 
-my_raiting = [7, 5, 3, 3, 2]
+my_raiting = [7, 5, 3, 2]
 print(my_raiting)
 count = 0
 
@@ -18,7 +18,7 @@ while count < 20:
     new_element = int(input("новый элемент рейтинга\n"))
     if new_element in my_raiting:
         index = my_raiting.index(new_element)
-        my_raiting.insert(index + 1, new_element)
+        my_raiting.insert(index, int(new_element))
         print(my_raiting)
     else:
         for i in my_raiting:
