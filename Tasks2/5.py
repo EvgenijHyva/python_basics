@@ -12,13 +12,13 @@ my_raiting = [7, 5, 3, 3, 2]
 print(my_raiting)
 count = 0
 
-while count <20 :
-    if len(my_raiting) >=6:
+while count < 20:
+    if len(my_raiting) >= 6:
         my_raiting.pop()
     new_element = int(input("новый элемент рейтинга\n"))
     if new_element in my_raiting:
         index = my_raiting.index(new_element)
-        my_raiting.insert(index+1, new_element)
+        my_raiting.insert(index + 1, new_element)
         print(my_raiting)
     else:
         for i in my_raiting:
@@ -29,3 +29,4 @@ while count <20 :
         if new_element not in my_raiting:
             my_raiting.append(new_element)
             print(my_raiting)
+    count += 1
