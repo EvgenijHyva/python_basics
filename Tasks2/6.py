@@ -20,7 +20,6 @@
 # “количество”: [5, 2, 7],
 # “ед”: [“шт.”]
 # }
-from typing import Dict, Any
 
 goods_quantity = int(input("сколько товаров хотите записать?\n"))
 my_goods = []
