@@ -28,7 +28,7 @@ cycle = True
 while cycle:
     for i in range(1, goods_quantity + 1):          # запись колличества товаров и данных
         name = input("Название товара? по умолчанию 'неопознаный товар'\n")
-        name = "неопознаный товар" if name == "" else name                 # тернарная перезапись
+        name = "неопознаный товар" if name == "" else name   # тернарная перезапись "для по умолчанию"
         price = input("цена? по умолчанию 'бесплатно'\n")
         price = "бесплатно" if price == "" else float(price)
         quantity = input("колличество? по умолчанию 'нэт' \n")
@@ -43,7 +43,7 @@ print("записано товаров в систеему {}: ".format(goods_qu
 for i in range(len(my_goods)):
     print(my_goods[i])
 # -------------------------------------------------------------------------------------------------------
-print("\nАналитика:")
+print("\nАналитика:\n")
 dict_analytics = {                      # пример реализации
                     "название": [],
                     "цена": [],
@@ -67,4 +67,3 @@ print("анализ готов, данные отсортированы: %d\n" %
 for i in range(len(dict_analytics)):
     content = {0: "название", 1: "цена", 2: "колличество", 3: "ед"}
     print(content[i], dict_analytics[content[i]], sep=" : ")
-    
