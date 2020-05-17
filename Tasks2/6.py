@@ -20,4 +20,51 @@
 # “количество”: [5, 2, 7],
 # “ед”: [“шт.”]
 # }
+from typing import Dict, Any
 
+goods_quantity = int(input("сколько товаров хотите записать?\n"))
+my_goods = []
+cycle = True
+while cycle:
+    for i in range(1, goods_quantity + 1):          # запись колличества товаров и данных
+        name = input("Название товара? по умолчанию 'неопознаный товар'\n")
+        name = "неопознаный товар" if name == "" else name                 # тернарная перезапись
+        price = input("цена? по умолчанию 'бесплатно'\n")
+        price = "бесплатно" if price == "" else float(price)
+        quantity = input("колличество? по умолчанию 'нэт' \n")
+        quantity = "нет" if quantity == "" else float(quantity)
+        unit = input("единица измерения? по умолчанию 'шт'\n")
+        unit = "шт" if unit == "" else unit
+        good = (i, {"название": name, "цена": price, "колличество": quantity, "ед": unit})
+        my_goods.append(good)
+        print("записан товар: ", good, "\n\n")
+    cycle = False
+print("записано товаров в систеему {}: ".format(goods_quantity))
+for i in range(len(my_goods)):
+    print(my_goods[i])
+# -------------------------------------------------------------------------------------------------------
+print("\nАналитика:")
+dict_analytics = {                      # пример реализации
+                    "название": [],
+                    "цена": [],
+                    "колличество": [],
+                    "ед": []
+                }
+for i in my_goods:                  # перечесляет кортежи
+    for k, v in i[1].items():       # разбивает кортеж на словарь и в словаре переберает key и value
+        if k == "название":             # проверка ключей и запись значений
+            dict_analytics["название"].append(v)
+        elif k == "цена":
+            dict_analytics["цена"].append(v)
+        elif k == "колличество":
+            dict_analytics["колличество"].append(v)
+        elif k == "ед":
+            dict_analytics["ед"].append(v)
+        else:
+            print("ошибка данных")
+
+print("анализ готов, данные отсортированы: %d\n" % len(dict_analytics))
+for i in range(len(dict_analytics)):
+    content = {0: "название", 1: "цена", 2: "колличество", 3: "ед"}
+    print(content[i], dict_analytics[content[i]], sep=" : ")
+    
