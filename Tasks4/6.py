@@ -6,3 +6,29 @@
 # должен быть бесконечным. Необходимо предусмотреть условие его завершения. Например, в первом задании выводим целые
 # числа, начиная с 3, а при достижении числа 10 завершаем цикл. Во втором также необходимо предусмотреть условие,
 # при котором повторение элементов списка будет прекращено.
+from itertools import cycle, count
+
+num_list = []
+for i in count(3):
+    if i >= 10:
+        break
+    else:
+
+        num_list.append(i)
+
+l = cycle(num_list)
+
+for i in range(len(num_list)):
+    print(next(l))
+print("end")
+
+# _________________вариант 2_________________________
+
+j = 0
+for i in cycle(num_list):
+    if j > len(num_list) - 1:
+        break
+    else:
+        print(next(l))
+        j += 1
+print("end")
