@@ -35,3 +35,14 @@ try:
     print(salary_calc(float_filter(func_list)))
 except ValueError:
     print("Укажите 3 аргумента для расчета")
+
+# ______________________________________________________________________________________________________
+
+def salary():
+    try:
+        time, rate, bonus = map(float, argv[1:])
+        print(f"Salary - {time * rate + bonus}")
+    except ValueError:
+        print("Enter all 3 arguments. not string or empty character")
+
+salary()

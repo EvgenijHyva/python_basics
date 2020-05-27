@@ -11,3 +11,7 @@ def my_func(var1, var2):
 
 
 print(reduce(my_func, my_list))
+
+# _____________________________________________________________________________________
+
+print(reduce(lambda a, b: a*b, [x for x in range(100, 1001, 2)]))
