@@ -15,12 +15,11 @@ class Worker:
 
 
 class Position(Worker):
-
     income_dict = {"wage": 34780, "bonus": None}
 
     def get_full_name(self):
         print(f"\n\033[34mПозиция {self.position}:\n\033[0m\033[33mИмя: \033[36m{self.name},"
-              f" \033[33mФамиллия: \033[36m{self.surname}")
+              f" \033[33mФамиллия: \033[36m{self.surname}\n")
 
     def total_income(self):
         wage = 0 if self._income["wage"] is None else self._income["wage"]
@@ -28,7 +27,9 @@ class Position(Worker):
         print(f"\033[31mоклад: {wage} руб, премия: {bonus} руб.\033[0m")
 
 
+# print(Worker.income_dict)
+
 position = Position("Антон", "Заглушкин", "разнорабочий")
 # print(position) # экземпляр класса
-position.total_income()
 position.get_full_name()
+position.total_income()
