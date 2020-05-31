@@ -5,8 +5,9 @@
 # переопределите метод show_speed. При значении скорости свыше 60 (TownCar) и 40 (WorkCar) должно выводиться
 # сообщение о превышении скорости. Создайте экземпляры классов, передайте значения атрибутов. Выполните доступ к
 # атрибутам, выведите результат. Выполните вызов методов и также покажите результат.
+from random import choice
 class Car:
-    def __init__(self, speed, color, name, is_police):
+    def __init__(self, speed, color, name, is_police=False):
         self.speed = speed
         self.color = color
         self.name = name
@@ -19,7 +20,12 @@ class Car:
         print(f"{self.color}-car {self.name} is stopped")
 
     def turn(self, direction):
-        print(f"{self.color}-car {self.name} is turning {direction}")
+        if self.is_police:
+            direction = ["\033[41mleft\033[0m", "\033[41mright\033[0m", "\033[41mstrait\033[0m",
+                         "\033[41mTo-Berlin\033[0m", "\033[41mSan-francisco\033[0m"]
+            print(f"{self.color}-car {self.name} is turning {choice(direction)}")
+        else:
+            print(f"{self.color}-car {self.name} is turning {direction}")
 
 
 class TownCar(Car):
@@ -33,7 +39,7 @@ class TownCar(Car):
             print(f"\033[36m{self.name} speed is {self.speed}km")
 
 
-towncar = TownCar(65, "red", "citroen", False)
+towncar = TownCar(65, "red", "citroen")
 towncar.show_speed()
 towncar.turn("left")
 
@@ -45,7 +51,7 @@ class SportCar(Car):
         print(f"{self.name} speed is \033[34m{self.speed}km\033[0m")
 
 
-sportcar = SportCar(150, "Colorfull", "Camaro", False)
+sportcar = SportCar(150, "Colorfull", "Camaro")
 sportcar.go()
 sportcar.show_speed()
 sportcar.turn("right")
@@ -62,7 +68,7 @@ class WorkCar(Car):
             print(f"\033[36m {self.name} speed is {self.speed}km")
 
 
-workcar = WorkCar(50, "blue", "Crane", False)
+workcar = WorkCar(50, "blue", "Crane")
 workcar.go()
 workcar.show_speed()
 workcar.stop()
