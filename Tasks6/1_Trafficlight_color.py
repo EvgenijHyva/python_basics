@@ -20,13 +20,13 @@ class TrafficLight():
     def running(self):
         count = 0
         while count < 10:
-            print(self.__red + "{}".format(" Red Light, Stay"))
+            print(self.__red + "{}".format(" Red Light, Stay\033[0m"))
             time.sleep(7)
-            print(self.__yellow + "\033[34m{}".format(" Yellow Light, wait - >green"))
+            print(self.__yellow + "\033[34m{}".format("Yellow Light, wait - >green\033[0m"))
             time.sleep(2)
-            print(self.__green + "{}".format(" Green Light, now you can go"))
+            print(self.__green + "{}".format("Green Light, now you can go\033[0m"))
             time.sleep(10)
-            print(self.__yellow + "\033[31m{}".format(" Yellow Light, soon  turning to red"))
+            print(self.__yellow + "\033[31m{}".format("Yellow Light, soon  turning to red\033[0m"))
             time.sleep(2)
             count += 1
 
