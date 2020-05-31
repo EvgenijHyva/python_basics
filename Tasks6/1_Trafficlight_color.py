@@ -7,10 +7,6 @@
 # завершать скрипт.
 import time
 
-#self.__red = "\033[1m\033[41m\033[30m"
-#self.__yellow = "\033[1m\033[42m\033[30m"
-#self.__green = "\033[1m\033[43m\033[30m"
-
 class TrafficLight():
     def __init__(self):
         self.__red = "\033[41m| |\033[0m"
