@@ -28,12 +28,12 @@ class Matrix:
 
 
 matrix1 = [[2, 4, 6],
-         [2, 5, 9],
-         [3, 6, 8]]
+           [2, 5, 9],
+           [3, 6, 8]]
 
 matrix2 = [[5, 1, 0],
-         [4, 8, 7],
-         [2, 3, 6]]
+           [4, 8, 7],
+           [2, 3, 6]]
 
 mat1 = Matrix(matrix1)
 mat2 = Matrix(matrix2)
