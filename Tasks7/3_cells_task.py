@@ -52,7 +52,7 @@ class Cell:
         res = "".join(res)
         return f"Cells quantity in row: \033[31m\033[1m[{num_el_in_row}]\033[0m.\n" \
                f"Rows: [\033[36m\033[1m{round(self.group/num_el_in_row)}\033[0m] -> \n{res}\n\n" \
-               f"Total cells value: \033[31m\033[1m[{self.group}]\033[0m, "
+               f"Total cells value: \033[31m\033[1m[{self.group}]\033[0m "
 
 cell = Cell(100)
 cell2 = Cell(17)
