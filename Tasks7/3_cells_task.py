@@ -54,6 +54,13 @@ class Cell:
                f"Rows: [\033[36m\033[1m{round(self.group/num_el_in_row)}\033[0m] -> \n{res}\n\n" \
                f"Total cells value: \033[31m\033[1m[{self.group}]\033[0m "
 
+        # альтернативный варик с генератором:
+    #def make_order(self, num_el_in_row):
+       # return "n".join(["*" * num_el_in_row for _ in range(self.group // num_el_in_row)])\
+        #       + "\n" + "*" *(self.group % num_el_in_row)
+
+
+
 cell = Cell(100)
 cell2 = Cell(17)
 print(cell + cell2)
