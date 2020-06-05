@@ -8,59 +8,51 @@
 from abc import abstractmethod, ABC
 
 
-class MyClothes(ABC):
-    def __init__(self):
-        super().__init__()
-
+class MyAbstractClass(ABC):
     @abstractmethod
-    def size(self):
-        pass
-
-    @abstractmethod
-    def height(self):
+    def consumption(self):
         pass
 
 
-class Suit(MyClothes):
-    def __init__(self, H, color="Black"):
-        super().__init__()
-        self.suit_size = H
-        self.color = color
+class Clothes(MyAbstractClass):
+    def __init__(self, param = 100):
+        self.param = param
+    @property
+    def consumption_Coat(self, param):
+        pass
+    @property
+    def consumption_Costume(self, param):
+        pass
+    @property
+    def consumption(self):
+        return self.consumption_Costume + self.consumption_Coat
+
+
+class Costume(Clothes):
 
     def __str__(self):
-        return f"{self.color} Suit size {self.suit_size}"
+        return f"Suit height {self.param}"
 
-    def size(self):
-        pass
-
-    def height(self):
-        result = 2 * self.suit_size + 0.3
-        print(f"{self.color}-cloth consumption for suit is: ")
-        return round(result, 2)
+    @property
+    def consumption(self):
+        result = round(2 * self.param + 0.3, 2)
+        Clothes.consumption_Costume = result
+        return f"Cloth consumption for Costume height {self.param}  is {result}"
 
 
-class Coat(MyClothes):
-    def __init__(self, V, color="Gray"):
-        super().__init__()
-        self.coat_size = V
-        self.color = color
-
+class Coat(Clothes):
     def __str__(self):
-        return f"{self.color} Coat size {self.coat_size}"
+        return f"Coat size {self.param}"
 
-    def size(self):
-        result = self.coat_size / 6.5 + 0.5
-        print(f"{self.color}-cloth consumption for Coat is:")
-        return round(result, 2)
+    @property
+    def consumption(self):
+        result = round(self.param / 6.5 + 0.5, 2)
+        Clothes.consumption_Coat = result
+        return f"Cloth consumption for Coat {self.param} size is {result}"
 
-    def height(self):
-        pass
-
-
-suit = Suit(48)
-print(suit)
-print(suit.height())
-
-coat = Coat(152)
-print(coat)
-print(coat.size())
+m1 = Clothes()
+m2 = Coat(35)
+print(m2.consumption)
+m3 = Costume(178)
+print(m3.consumption)
+print(f"Total cloth consumption = {m1.consumption}")
