@@ -35,6 +35,7 @@ class Date:
                 print("\033[33mDate is valid\033[0m")
             else:
                 print("\033[31mDate not valid, example: dd-mm-yyyy or dd-mm-yy\033[0m")
+                
 
 date = Date("12-05-2019")
 Date.valid("15-15-2000")
