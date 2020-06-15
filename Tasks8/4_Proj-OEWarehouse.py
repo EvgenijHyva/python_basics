@@ -10,11 +10,13 @@
 # данных. Например, для указания количества принтеров, отправленных на склад, нельзя использовать строковый тип
 # данных. Подсказка: постарайтесь по возможности реализовать в проекте «Склад оргтехники» максимум возможностей,
 # изученных на уроках по ООП.
-r, g, y, b, nc = ("\033[31m", "\033[32m", "\033[33m", "\033[35m", "\033[0m")  # colloring for output
+from random import choice
+
+r, g, y, b, nc = ("\033[31m", "\033[32m", "\033[33m", "\033[35m", "\033[0m")  # coloring for output
 
 
 class OfficeEquipmentWarehouse:
-    def __init__(self, height=10, size=100):
+    def __init__(self, height=10, size=1000):
         self.size = {"Cub-m": size}
         self.height = {"m": height}
         self.__store_area_const = size
@@ -101,23 +103,8 @@ class Scanner(OfficeEquipment):
         self.height = {"m": 0.5}
         self.place = {"Cub-m": self.area["Sq-m"] * self.height["m"] * q}
 
-
-oq = OfficeEquipment("scan", "xz+1", "3-f")
-xe = Xerox("Canon", "Black", "24-xer")
-sca = Scanner("Samsung", "CZ-50")
-pri = Printer("SAMSUNG PRO", "Purple", "XC-19IE", 3)
-pri1 = Printer("Samu", "green", "xT", 4)
-
-
-# print("objects:", xe, oq, sca, pri)
-
-# print(oew)
-
-oew = OfficeEquipmentWarehouse(10, 50)
-print(oew)
-oew.to_receive(xe, xe, sca, pri, pri, xe, pri1, pri, xe)
-oew.show_wh_equip()
 class Client:
+    # Create list of equipment:
     printers = ["samsung", "Fast-P", "china-print", "Office-Print"]
     type_print = ["back-print", "color-print"]
     xeroxes = ["Canon", "Fast-Xerox", "Office-xerox"]
@@ -125,6 +112,7 @@ class Client:
     scanners = ["Just scanner", "Print and Scan"]
     type_scanners = ["Simple", "Personalized", "With-print", "Office-economy"]
     color = ["Back", "White", "Purple", "Colorful"]
+    equip = []
 
     @staticmethod
     def new_warehouse():
@@ -132,7 +120,7 @@ class Client:
         split the warehouse dimensions(height and volume) with a comma"""
 
         user = input("create new Warehouse? Write height (m), write volume (Cub-m)."
-                                   "For default size press enter. Default size = 100 Cub-m 10m height\n")
+                                   "For default size press enter. Default size = 1000 Cub-m 10m height\n")
         try:
             user = list(map(int, user.split(",")))
         except ValueError:
@@ -148,16 +136,43 @@ class Client:
             oew = OfficeEquipmentWarehouse()
             return oew
 
-    quest = ["Select: Printers - 1, Xerox - 2, Scanner - 3. enter to exit\n",
-             "How many equipment you want to place in Warehouse? enter to exit\n"]
+    def warehouse_action(self):
+        try:
+            while True:
+                action = input("Select operation:\nplacing to warehouse <1>\nissue from warehouse <2>."
+                               "\nenter to exit\n")
+                if action in "":
+                    print("selected exit")
+                    break
+                elif action in "1":
+                    action = input("What you want to place in warehouse?\n<1> printer\n<2> scanner\n<3> xerox\n")
+                    if action == "":
+                        break
+                    elif action in "1":
+                        act = input("quantity")
+                        for i in range(int(act)):
+                            oew.to_receive(Printer(choice(self.printers), choice(self.type_print), choice(self.color)))
+                    elif action in "2":
+                        act = input("quantity")
+                        for i in range(int(act)):
+                            oew.to_receive(Scanner(choice(self.scanners), choice(self.type_scanners), choice(self.color)))
+                    elif action in "3":
+                        act = input("quantity")
+                        for i in range(int(act)):
+                            oew.to_receive(Xerox(choice(self.xeroxes), choice(self.type_xerox), choice(self.color)))
+                    else:
+                        print("I dont know what you want")
 
-    def placing(self):
-        user = input("Select: Printers - 1, Xerox - 2, Scanner - 3. enter to exit\n")
-        user = int(user) if user.isdigit() and 4 > int(user) >= 0 else 0
-        print(user, type(user))
+                elif action in "2":
+                    oew.show_wh_equip()
+                    print("ready")
 
+                else:
+                    print("Selected unknown operation")
+                    continue
+        except TypeError:
+            print("Write only numbers")
 
-
-#w = Client().new_warehouse() # for creating new warehouse
-#print(w)
-#Client().placing()
+oew = OfficeEquipmentWarehouse(10, 1000)
+#oew = Client().new_warehouse() # for creating new warehouse
+Client().warehouse_action()

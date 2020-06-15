@@ -61,11 +61,11 @@ class Cell:
 
 
 
-cell = Cell(100)
+cell = Cell(35)
 cell2 = Cell(17)
 #print(cell + cell2)
 #print(cell / cell2)
 #print(cell * cell2)
 print(cell)
 #print(cell - cell2)
-print(cell.make_order(20))
+print(cell.make_order(7))
