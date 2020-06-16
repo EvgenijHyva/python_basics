@@ -59,7 +59,7 @@ class OfficeEquipmentWarehouse:
         info = []
         for i in enumerate(self.__not_fit_equipment):
             info.append([f"{i[1][0]['equip']} - {i[1][2]['type']}", i[1][3]['qua']])
-        return f"{info}"
+        return f"{r}{'list is empty' if not info else f'waiting for free place:{info}'} {nc}"
 
     @property
     def clean_not_fit_equip(self):
@@ -104,7 +104,7 @@ class Scanner(OfficeEquipment):
 
 
 class Client:
-    # Create list of equipment:
+    # Create list of equipment randomly:
     printers = ["samsung", "Fast-P", "china-print", "Office-Print"]
     type_print = ["back-print", "color-print"]
     xeroxes = ["Canon", "Fast-Xerox", "Office-xerox"]
@@ -136,60 +136,73 @@ class Client:
             oew = OfficeEquipmentWarehouse()
             return oew
 
+    # under construction!
+    def issue_wh(self, action):
+        if action == "1":
+            print("printer\n")
+        elif action == "2":
+            print("scanner\n")
+        elif action == "3":
+            print("xerox\n")
+        else:
+            print(f"{r}Only 1, 2, 3\n{nc}")
+
     def warehouse_action(self):
         global oew
         try:
             action = input(f"{g}New WH? y/n?{nc}\n")
             if action == "y":
                 oew = Client().new_warehouse()
-            elif action == "n":
+            else:
                 oew = OfficeEquipmentWarehouse(10, 1000)
             while True:
                 action = input(f"{g}Select operation:{nc}\n<1> Placing to warehouse\n<2> Issue from warehouse"
                                "\n<3> Warehouse inventorization\n<4> Awaiting loading at the warehouse\n"
                                f"<5> Clear order list\nOr <Enter> to exit\n")
-                if action in "":
+                if action == "":
                     print("selected exit")
                     break
-                elif action in "1":
+                elif action == "1":
                     action = input("What you want to place in warehouse?\n<1> printer\n<2> scanner\n<3> xerox\n")
                     if action == "":
                         break
-                    elif action in "1":
+                    elif action == "1":
                         act = input("quantity")
                         oew.to_receive(
                             Printer(choice(self.printers), choice(self.type_print), choice(self.color), int(act)))
-                    elif action in "2":
+                    elif action == "2":
                         act = input("quantity")
                         oew.to_receive(
-                                Scanner(choice(self.scanners), choice(self.type_scanners), choice(self.color), int(act)))
-                    elif action in "3":
+                            Scanner(choice(self.scanners), choice(self.type_scanners), choice(self.color), int(act)))
+                    elif action == "3":
                         act = input("quantity")
                         oew.to_receive(
                             Xerox(choice(self.xeroxes), choice(self.type_xerox), choice(self.color), int(act)))
                     else:
                         print("I dont know what you want")
 
-                elif action in "2":
-                    pass
+                elif action == "2":
+                    action = input("Select equip from warehouse:\n<1> Printer\n<2> Scanner\n<3> Xerox\n")
+                    self.issue_wh(action)
+                    print("under construction")
 
-                elif action in "3":
+                elif action == "3":
                     print("checking warehouse:")
                     print(f"Warehouse storage value: {oew.storage} Cub-m")
                     oew.show_wh_equip()
 
-                elif action in "4":
+                elif action == "4":
                     print(oew.not_fit_equip)
 
                 elif action in "5":
                     print(oew.clean_not_fit_equip)
-
+                # secret function:
                 elif action == "666":
-                    des = input(f"{r}Are you sure? i will destroy everything, and create new warehouse-word! y/n\n{nc}")
+                    des = input(f"{r}Are you sure?It will destroy everything, and create new warehouse-word! y/n\n{nc}")
                     if des == "y":
                         oew = Client().new_warehouse()
                     elif des == "n":
-                        print(f"{y}Okay i give a chance for you{nc}")
+                        print(f"{y}Okay i^ll give a chance for you{nc}")
                         continue
                     else:
                         continue
@@ -197,8 +210,15 @@ class Client:
                 else:
                     print("Selected unknown operation")
                     continue
-        except TypeError:
+        # exceptions:
+        except TypeError as err:
             print("Write only numbers")
+            with open("err-log.txt", "a", encoding="utf-8") as file:
+                file.write(f"{err}\n")
+        except ValueError as err:
+            print("Write only numbers")
+            with open("err-log.txt", "a", encoding="utf-8") as file:
+                file.write(f"{err}\n")
 
 
 Client().warehouse_action()
