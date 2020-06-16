@@ -26,7 +26,7 @@ class OfficeEquipmentWarehouse:
     def to_receive(self, *equipments):
         for equip in equipments:
             atr = equip.to_send()
-            print(f"Required space for equip {atr[1].get('Cub-m')} Cub-m")
+            print(f"Required space for equip {round(atr[1].get('Cub-m'), 2)} Cub-m")
             # check for space in Warehouse
             if round(self.size['Cub-m']) > atr[1].get("Cub-m") > 0:
                 self.size["Cub-m"] -= atr[1].get("Cub-m")  # Warehouse place deduction
@@ -49,7 +49,6 @@ class OfficeEquipmentWarehouse:
     def __str__(self):
         return f"{g}Warehouse {round(self.size['Cub-m'], 2)}m^3 size, store area " \
                f"about {round(self.size['Cub-m'] / self.__store_area_const * 100)}%{nc}."
-
 
     @property
     def storage(self):
@@ -103,6 +102,7 @@ class Scanner(OfficeEquipment):
         self.height = {"m": 0.5}
         self.place = {"Cub-m": self.area["Sq-m"] * self.height["m"] * q}
 
+
 class Client:
     # Create list of equipment:
     printers = ["samsung", "Fast-P", "china-print", "Office-Print"]
@@ -120,7 +120,7 @@ class Client:
         split the warehouse dimensions(height and volume) with a comma"""
 
         user = input("create new Warehouse? Write height (m), write volume (Cub-m)."
-                                   "For default size press enter. Default size = 1000 Cub-m 10m height\n")
+                     "For default size press enter. Default size = 1000 Cub-m 10m height\n")
         try:
             user = list(map(int, user.split(",")))
         except ValueError:
@@ -137,10 +137,17 @@ class Client:
             return oew
 
     def warehouse_action(self):
+        global oew
         try:
+            action = input(f"{g}New WH? y/n?{nc}\n")
+            if action == "y":
+                oew = Client().new_warehouse()
+            elif action == "n":
+                oew = OfficeEquipmentWarehouse(10, 1000)
             while True:
-                action = input("Select operation:\nplacing to warehouse <1>\nissue from warehouse <2>."
-                               "\nenter to exit\n")
+                action = input(f"{g}Select operation:{nc}\n<1> Placing to warehouse\n<2> Issue from warehouse"
+                               "\n<3> Warehouse inventorization\n<4> Awaiting loading at the warehouse\n"
+                               f"<5> Clear order list\nOr <Enter> to exit\n")
                 if action in "":
                     print("selected exit")
                     break
@@ -150,22 +157,42 @@ class Client:
                         break
                     elif action in "1":
                         act = input("quantity")
-                        for i in range(int(act)):
-                            oew.to_receive(Printer(choice(self.printers), choice(self.type_print), choice(self.color)))
+                        oew.to_receive(
+                            Printer(choice(self.printers), choice(self.type_print), choice(self.color), int(act)))
                     elif action in "2":
                         act = input("quantity")
-                        for i in range(int(act)):
-                            oew.to_receive(Scanner(choice(self.scanners), choice(self.type_scanners), choice(self.color)))
+                        oew.to_receive(
+                                Scanner(choice(self.scanners), choice(self.type_scanners), choice(self.color), int(act)))
                     elif action in "3":
                         act = input("quantity")
-                        for i in range(int(act)):
-                            oew.to_receive(Xerox(choice(self.xeroxes), choice(self.type_xerox), choice(self.color)))
+                        oew.to_receive(
+                            Xerox(choice(self.xeroxes), choice(self.type_xerox), choice(self.color), int(act)))
                     else:
                         print("I dont know what you want")
 
                 elif action in "2":
+                    pass
+
+                elif action in "3":
+                    print("checking warehouse:")
+                    print(f"Warehouse storage value: {oew.storage} Cub-m")
                     oew.show_wh_equip()
-                    print("ready")
+
+                elif action in "4":
+                    print(oew.not_fit_equip)
+
+                elif action in "5":
+                    print(oew.clean_not_fit_equip)
+
+                elif action == "666":
+                    des = input(f"{r}Are you sure? i will destroy everything, and create new warehouse-word! y/n\n{nc}")
+                    if des == "y":
+                        oew = Client().new_warehouse()
+                    elif des == "n":
+                        print(f"{y}Okay i give a chance for you{nc}")
+                        continue
+                    else:
+                        continue
 
                 else:
                     print("Selected unknown operation")
@@ -173,6 +200,5 @@ class Client:
         except TypeError:
             print("Write only numbers")
 
-oew = OfficeEquipmentWarehouse(10, 1000)
-#oew = Client().new_warehouse() # for creating new warehouse
+
 Client().warehouse_action()
